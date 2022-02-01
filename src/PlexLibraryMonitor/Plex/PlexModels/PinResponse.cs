@@ -1,4 +1,4 @@
-﻿namespace PlexLibraryMonitor.Plex.Models
+﻿namespace PlexLibraryMonitor.Plex.PlexModels
 {
     public class PinResponse
     {
@@ -11,7 +11,7 @@
         public int expiresIn { get; set; }
         public string createdAt { get; set; }
         public string expiresAt { get; set; }
-        public object authToken { get; set; }
-        public object newRegistration { get; set; }
+        public string authToken { get; set; }
+        public string newRegistration { get; set; }
     }
 }

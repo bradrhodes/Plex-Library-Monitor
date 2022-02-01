@@ -1,4 +1,4 @@
-namespace PlexLibraryMonitor.Plex.Models
+namespace PlexLibraryMonitor.Plex.PlexModels
 {
     public class Location
     {

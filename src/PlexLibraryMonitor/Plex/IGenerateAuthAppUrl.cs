@@ -1,8 +1,4 @@
-﻿using System;
-using System.Web;
-using Hangfire.Dashboard.Resources;
-
-namespace PlexLibraryMonitor
+﻿namespace PlexLibraryMonitor.Plex
 {
     public interface IGenerateAuthAppUrl
     {
