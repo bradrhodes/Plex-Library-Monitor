@@ -23,6 +23,8 @@ namespace PlexLibraryMonitor
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddHttpClient();
+            services.AddSingleton<IGenerateAuthAppUrl, DefaultAuthAppUrlGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

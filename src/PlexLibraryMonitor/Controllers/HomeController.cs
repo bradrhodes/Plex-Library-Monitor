@@ -12,15 +12,19 @@ namespace PlexLibraryMonitor.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IGenerateAuthAppUrl _urlGenerator;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IGenerateAuthAppUrl urlGenerator)
         {
             _logger = logger;
+            _urlGenerator = urlGenerator ?? throw new ArgumentNullException(nameof(urlGenerator));
         }
 
         public IActionResult Index()
         {
-            return View();
+            var url = _urlGenerator.GenerateUrl("clientId", "pinCode", "clientName");
+            _logger.LogInformation($"Generated URL: {url}");
+            return View("Index", url);
         }
 
         public IActionResult Privacy()
