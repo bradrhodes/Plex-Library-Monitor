@@ -14,11 +14,14 @@ namespace PlexLibraryMonitor.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IGenerateAuthAppUrl _urlGenerator;
+        private readonly IPlexSdk _plex;
 
-        public HomeController(ILogger<HomeController> logger, IGenerateAuthAppUrl urlGenerator)
+
+        public HomeController(ILogger<HomeController> logger, IGenerateAuthAppUrl urlGenerator, IPlexSdk plex)
         {
             _logger = logger;
             _urlGenerator = urlGenerator ?? throw new ArgumentNullException(nameof(urlGenerator));
+            _plex = plex ?? throw new ArgumentNullException(nameof(plex));
         }
 
         public IActionResult Index()

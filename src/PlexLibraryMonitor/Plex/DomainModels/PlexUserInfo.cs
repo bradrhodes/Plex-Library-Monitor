@@ -1,11 +1,13 @@
-﻿namespace PlexLibraryMonitor.Plex.DomainModels
+﻿using System;
+
+namespace PlexLibraryMonitor.Plex.DomainModels
 {
-    public class PlexUserInfo
+    public record PlexUserInfo
     {
-        public int Id { get; set; } = 0;
-        public string Uuid { get; set; } = string.Empty;
-        public string Username { get; set; } = string.Empty;
-        public string Title { get; set; } = string.Empty;
-        public string Thumbnail { get; set; } = string.Empty;
+        public int Id { get; init; } 
+        public string Uuid { get; init; } 
+        public string Username { get; init; }
+        public string Title { get; init; }
+        public string Thumbnail { get; init; }
     }
 }
