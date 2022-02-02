@@ -1,4 +1,4 @@
-﻿namespace PlexLibraryMonitor.Plex
+﻿namespace Plibmon.Domain.Plex
 {
     public interface IGenerateAuthAppUrl
     {

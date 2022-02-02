@@ -1,4 +1,4 @@
-﻿namespace PlexLibraryMonitor
+﻿namespace Plibmon.Domain
 {
     public class PlibmonSettings
     {

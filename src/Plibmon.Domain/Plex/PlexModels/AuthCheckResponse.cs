@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PlexLibraryMonitor.Plex.PlexModels
+﻿namespace Plibmon.Domain.Plex.PlexModels
 {
     public class AuthCheckResponse
     {

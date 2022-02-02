@@ -1,6 +1,4 @@
-﻿using System.Security.Principal;
-
-namespace PlexLibraryMonitor.Plex.DomainModels
+﻿namespace Plibmon.Domain.Plex.DomainModels
 {
     public abstract class ValidateTokenResponse
     {

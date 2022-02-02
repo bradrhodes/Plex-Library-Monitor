@@ -1,4 +1,4 @@
-﻿namespace PlexLibraryMonitor.Plex.DomainModels
+﻿namespace Plibmon.Domain.Plex.DomainModels
 {
     public abstract class PollPinResponse
     {

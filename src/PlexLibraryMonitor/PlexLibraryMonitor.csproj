@@ -15,4 +15,8 @@
     <PackageReference Include="Refit.HttpClientFactory" Version="6.2.16" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Plibmon.Domain\Plibmon.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using PlexLibraryMonitor.Plex;
+using Plibmon.Domain.Plex;
 
 namespace PlexLibraryMonitor.Controllers
 {
@@ -14,14 +14,12 @@ namespace PlexLibraryMonitor.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IGenerateAuthAppUrl _urlGenerator;
-        private readonly IPlexSdk _plex;
 
 
-        public HomeController(ILogger<HomeController> logger, IGenerateAuthAppUrl urlGenerator, IPlexSdk plex)
+        public HomeController(ILogger<HomeController> logger, IGenerateAuthAppUrl urlGenerator)
         {
             _logger = logger;
             _urlGenerator = urlGenerator ?? throw new ArgumentNullException(nameof(urlGenerator));
-            _plex = plex ?? throw new ArgumentNullException(nameof(plex));
         }
 
         public IActionResult Index()

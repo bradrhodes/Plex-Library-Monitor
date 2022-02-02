@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using PlexLibraryMonitor.Plex.DomainModels;
+﻿using Plibmon.Domain.Plex.DomainModels;
 
-namespace PlexLibraryMonitor.Plex
+namespace Plibmon.Domain.Plex
 {
     public interface IPlexSdk
     {

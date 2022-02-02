@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-using PlexLibraryMonitor.Plex.PlexModels;
+﻿using Plibmon.Domain.Plex.PlexModels;
 using Refit;
 
-namespace PlexLibraryMonitor.Plex
+namespace Plibmon.Domain.Plex
 {
     public interface IPlexApi
     {

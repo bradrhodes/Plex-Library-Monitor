@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using PlexLibraryMonitor.Plex.DomainModels;
-using PlexLibraryMonitor.Plex.PlexModels;
+using Plibmon.Domain.Plex.DomainModels;
+using Plibmon.Domain.Plex.PlexModels;
 
-namespace PlexLibraryMonitor.Plex
+namespace Plibmon.Domain.Plex
 {
     public class PlexSdk : IPlexSdk
     {
