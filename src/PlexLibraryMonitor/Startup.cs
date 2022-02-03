@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hangfire;
 using Hangfire.MemoryStorage;
+using Plibmon.Domain;
 using Plibmon.Domain.Plex;
 
 namespace PlexLibraryMonitor
@@ -27,7 +28,8 @@ namespace PlexLibraryMonitor
         {
             services.AddControllersWithViews();
             services.AddHttpClient();
-            services.AddSingleton<IGenerateAuthAppUrl, DefaultAuthAppUrlGenerator>();
+            services.AddPlibmonDomain();
+            services.AddPlibmonSampleConfig();
             services.AddHangfire(x => x.UseMemoryStorage());
             services.AddHangfireServer();
         }
@@ -51,9 +53,12 @@ namespace PlexLibraryMonitor
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                // Uncomment this to re-enable the MVC web pages
+                // endpoints.MapControllerRoute(
+                //     name: "default",
+                //     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllers();
             });
             app.UseHangfireDashboard();
         }

@@ -1,9 +1,18 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Plibmon.BlazorWasm</a>
+        <a class="navbar-brand" href="">plibmon</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
+    </div>
+</div>
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <div class="nav-status">
+            <img class="plex-icon" src="pngegg.png" alt="Plex icon"/>
+            <a class="navbar-brand" href="">Can we connect to plex</a>
+        </div>
     </div>
 </div>
 
@@ -12,6 +21,11 @@
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="plexConnect">
+                <span class="oi oi-plus" aria-hidden="true"></span> Connect to Plex
             </NavLink>
         </div>
         <div class="nav-item px-3">
