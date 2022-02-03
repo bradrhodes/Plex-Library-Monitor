@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hangfire;
+using Hangfire.MemoryStorage;
 using Plibmon.Domain.Plex;
 
 namespace PlexLibraryMonitor
@@ -26,6 +28,8 @@ namespace PlexLibraryMonitor
             services.AddControllersWithViews();
             services.AddHttpClient();
             services.AddSingleton<IGenerateAuthAppUrl, DefaultAuthAppUrlGenerator>();
+            services.AddHangfire(x => x.UseMemoryStorage());
+            services.AddHangfireServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +55,7 @@ namespace PlexLibraryMonitor
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseHangfireDashboard();
         }
     }
 }
