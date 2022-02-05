@@ -1,6 +1,31 @@
 ﻿@page "/PlexConnect"
-<h3>PlexConnect</h3>
-<p>Connect to plex via link.</p>
+@using Plibmon.Shared
+@inject HttpClient Http
+<h3>Connect to Plex</h3>
+<p>It is necessary to allow Plibmon to have access to your plex account.
+    The access can be revoked from Plex settings at any time. </p>
+<p>Follow this link and sign into your plex account to grant access.</p>
+<p>@_link</p>
 @code {
-    
+    string _link = "Generating link to allow access to Plex.";
+
+    private async Task GetPinLink(CancellationToken cancellationToken)
+    {
+        // var pinLinkResult = await Http.GetStringAsync("api/getpinlink").ConfigureAwait(false);
+        var pinLinkResult = await Http.GetStringAsync("api/Plibmon").ConfigureAwait(false);
+        // _link = pinLinkResult switch 
+        // {
+        //     PinLinkResult.PinLinkSuccess s => s.PinLink,
+        //     PinLinkResult.PinLinkFailure f => f.ErrorMessage,
+        //     _ => throw new ArgumentOutOfRangeException()
+        // };
+        _link = pinLinkResult;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetPinLink(new CancellationTokenSource().Token);
+        await base.OnInitializedAsync();
+    }
+
 }

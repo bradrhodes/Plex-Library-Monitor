@@ -6,7 +6,7 @@ using Refit;
 
 namespace Plibmon.Domain;
 
-public static class DomainDIRegistration
+public static class DomainDiRegistration
 {
    public static void AddPlibmonDomain(this IServiceCollection services)
    {
@@ -16,6 +16,7 @@ public static class DomainDIRegistration
       services.AddSingleton<IUserInfoService, UserInfoService>();
       services.AddSingleton<IPlibmonService, PlibmonService>();
       services.AddSingleton<IPlexSdk, PlexSdk>();
+      services.AddSingleton<IPinService, PinService>();
       services.AddRefitClient<IPlexApi>().ConfigureHttpClient(httpClient =>
       {
          httpClient.BaseAddress = new Uri("https://plex.tv/api/v2");
