@@ -3,10 +3,15 @@ using Hangfire;
 using Hangfire.MemoryStorage;
 using MediatR;
 using Plibmon.Domain;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Host.UseSerilog((ctx, lc) =>
+{
+    lc.WriteTo.Console();
+});
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
