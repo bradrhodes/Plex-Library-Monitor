@@ -30,9 +30,11 @@ public class PlibmonController : Controller
     // [Route("api/getpinlink")]
     public async Task<string> GetPinLink(CancellationToken cancellationToken)
     {
-        var pinResult = await _plibmon.GetPinLink(cancellationToken);
+        // Get a pin link
+        var pinResult = await _plibmon.GetPinLink(cancellationToken).ConfigureAwait(false);
         
-        // Start polling
+        // Start polling to see if it is validated
+        _plibmon.PollForPinAuthorization();
 
         return pinResult switch
         {

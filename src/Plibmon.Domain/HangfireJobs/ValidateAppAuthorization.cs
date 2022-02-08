@@ -23,7 +23,7 @@ public class ValidateAppAuthorization
         _recurringJobManager = recurringJobManager;
     }
 
-    public async Task Validate(string pinId, string pinCode, string clientId, CancellationToken cancellationToken)
+    public async Task Validate(string clientId, CancellationToken cancellationToken)
     {
         var authResult = await _pinService.ValidatePin(clientId, cancellationToken).ConfigureAwait(false);
 

@@ -27,8 +27,9 @@ class PlibmonService : IPlibmonService
     public Task<PinLinkResult> GetPinLink(CancellationToken cancellationToken)
         => _pinService.GetPinLink(_settings.ClientId, _settings.ClientName, cancellationToken);
 
-    public void PollForPinAuthorization(string pinId, string pinCode, string clientId, CancellationToken cancellationToken)
+    public void PollForPinAuthorization()
     {
-        _recurringJobManager.AddOrUpdate<ValidateAppAuthorization>(ValidateAppAuthorization.BackgroundTaskId, task => task.Validate(pinId, pinCode, clientId, CancellationToken.None), "*/2 * * * * *");
+        _recurringJobManager.AddOrUpdate<ValidateAppAuthorization>(ValidateAppAuthorization.BackgroundTaskId, 
+            task => task.Validate(_settings.ClientId, CancellationToken.None), "*/2 * * * * *");
     }
 }
