@@ -44,6 +44,7 @@ class PinService : IPinService
 
     public async Task<PinAuthorizationResponse> ValidatePin(string clientId, CancellationToken cancellationToken)
     {
+        _logger.LogDebug("Attempting to find Pin in storage");
         // Get PinInfo
         var pinInfo = await _storage.RetrieveObject<PinInfo>(cancellationToken).ConfigureAwait(false) switch
         {
@@ -51,19 +52,29 @@ class PinService : IPinService
             StorageReadResult<PinInfo>.Failure => new PinInfo(string.Empty, string.Empty),
             _ => throw new ArgumentOutOfRangeException()
         };
+        
+        _logger.LogDebug("PinInfo from storage: {@pinInfo}", pinInfo);
 
         if (string.IsNullOrEmpty(pinInfo.PinCode) || string.IsNullOrEmpty(pinInfo.PinId))
+        {
+            _logger.LogDebug("No PinInfo from storage. Cannot validate.");
             return new PinAuthorizationResponse.PinAuthorizationInvalidOrExpired();
+        }
         
+        _logger.LogDebug("Checking Authorization.");
         var pinAuthorizationResponse = await _plex
             .CheckForPinAuthorization(pinId: pinInfo.PinId, pinCode: pinInfo.PinCode, clientId: clientId, cancellationToken)
             .ConfigureAwait(false);
+        _logger.LogDebug("Authorization response received: {@authResponse}", pinAuthorizationResponse);
 
         if (pinAuthorizationResponse is PinAuthorizationResponse.Success pin)
         {
-            await _storage.StoreObject(pin.AuthToken, cancellationToken);
+            _logger.LogInformation("Pin was authorized.");
+            await _storage.StoreObject(pin.AuthToken, cancellationToken).ConfigureAwait(false);
+            await _storage.RemoveObject<PinInfo>(cancellationToken).ConfigureAwait(false);
         }
 
+        _logger.LogInformation("Pin was not Authorized");
         return pinAuthorizationResponse;
     }
 }

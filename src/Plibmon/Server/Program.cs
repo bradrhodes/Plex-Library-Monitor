@@ -4,6 +4,7 @@ using Hangfire.MemoryStorage;
 using MediatR;
 using Plibmon.Domain;
 using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((ctx, lc) =>
 {
     lc.WriteTo.Console();
+    lc.MinimumLevel.Override("Microsoft", LogEventLevel.Debug);
 });
 
 builder.Services.AddControllersWithViews();
@@ -48,5 +50,7 @@ app.MapControllers();
 app.MapFallbackToFile("index.html");
 
 app.UseHangfireDashboard();
+
+System.Net.WebRequest.DefaultWebProxy = new System.Net.WebProxy("127.0.0.1", 8888);
 
 app.Run();

@@ -68,9 +68,13 @@ namespace Plibmon.Domain.Plex
         public async Task<PinAuthorizationResponse> CheckForPinAuthorization(string pinId, string pinCode, string clientId, CancellationToken cancellationToken)
         {
             var response = await _plexApi.CheckForPinAuthorization(pinId, pinCode, clientId).ConfigureAwait(false);
+            _logger.LogDebug("CheckPin Response: {@response}", response);
 
             if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogWarning("Pin invalid or expired");
                 return new PinAuthorizationResponse.PinAuthorizationInvalidOrExpired();
+            }
 
             if (response.Content == null)
             {
@@ -80,10 +84,14 @@ namespace Plibmon.Domain.Plex
 
             if (string.IsNullOrEmpty(response.Content.authToken))
             {
+                _logger.LogInformation("Pin not authorized yet");
                 return new PinAuthorizationResponse.PinNotYetAuthorized();
             }
 
-            return new PinAuthorizationResponse.Success(AuthToken: new PlexToken(response.Content.authToken));
+            var token = new PlexToken(response.Content.authToken);
+            _logger.LogDebug("Auth token received: {@token}", token);
+            _logger.LogInformation("Auth token received");
+            return new PinAuthorizationResponse.Success(token);
         }
     }
 }

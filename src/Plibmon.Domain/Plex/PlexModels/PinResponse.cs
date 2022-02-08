@@ -12,6 +12,6 @@
         public string createdAt { get; set; }
         public string expiresAt { get; set; }
         public string authToken { get; set; }
-        public string newRegistration { get; set; }
+        public bool? newRegistration { get; set; }
     }
 }

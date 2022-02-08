@@ -8,11 +8,13 @@ class TokenService : ITokenService
 {
     private readonly IStorageAdapter _storage;
     private readonly IPlexSdk _plex;
+    private readonly PlibmonSettings _settings;
 
-    public TokenService(IStorageAdapter storage, IPlexSdk plex)
+    public TokenService(IStorageAdapter storage, IPlexSdk plex, PlibmonSettings settings)
     {
         _storage = storage ?? throw new ArgumentNullException(nameof(storage));
         _plex = plex ?? throw new ArgumentNullException(nameof(plex));
+        _settings = settings ?? throw new ArgumentNullException(nameof(settings));
     }
     public async Task<PlexToken> GetToken(CancellationToken cancellationToken)
     {
@@ -26,9 +28,21 @@ class TokenService : ITokenService
         };
     }
 
-    public Task<PlexToken> ValidateToken(CancellationToken cancellationToken)
+    public async Task<bool> HaveValidToken(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var token = await GetToken(cancellationToken).ConfigureAwait(false);
+
+        if (string.IsNullOrEmpty(token.Token))
+            return false;
+
+        var tokenValidationResponse = await _plex.ValidateToken(token.Token,
+            _settings.ClientId, _settings.ClientName).ConfigureAwait(false);
+
+        return tokenValidationResponse switch
+        {
+            ValidateTokenResponse.ValidToken => true,
+            ValidateTokenResponse.InvalidToken => false
+        };
     }
 
 }

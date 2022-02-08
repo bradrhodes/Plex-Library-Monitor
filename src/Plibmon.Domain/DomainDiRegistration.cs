@@ -22,6 +22,7 @@ public static class DomainDiRegistration
       {
          httpClient.BaseAddress = new Uri("https://plex.tv/api/v2");
          httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+         
       });
    }
 

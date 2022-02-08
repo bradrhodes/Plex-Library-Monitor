@@ -5,5 +5,5 @@ namespace Plibmon.Domain;
 public interface ITokenService
 {
     Task<PlexToken> GetToken(CancellationToken cancellationToken);
-    Task<PlexToken> ValidateToken(CancellationToken cancellationToken);
+    Task<bool> HaveValidToken(CancellationToken cancellationToken);
 }

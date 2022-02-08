@@ -31,6 +31,7 @@ public class ValidateAppAuthorization
         {
             case PinAuthorizationResponse.Success pinAuth:
                 _logger.LogInformation("App is authorized.");
+                _logger.LogDebug("App is authorized: {@token}", pinAuth.AuthToken);
                 // Publish an event
                 await _mediator.Publish(new AppAuthorizationChecked.Authorized(), cancellationToken).ConfigureAwait(false);
                 // Kill this job

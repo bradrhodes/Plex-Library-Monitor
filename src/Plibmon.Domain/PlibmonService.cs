@@ -18,11 +18,8 @@ class PlibmonService : IPlibmonService
         _pinService = pinService ?? throw new ArgumentNullException(nameof(pinService));
         _recurringJobManager = recurringJobManager ?? throw new ArgumentNullException(nameof(recurringJobManager));
     }
-    public async Task<bool> CanConnectToPlex(CancellationToken cancellationToken)
-    {
-        var plexToken = await _tokenService.GetToken(cancellationToken).ConfigureAwait(false);
-        return !string.IsNullOrEmpty(plexToken.Token);
-    }
+    public Task<bool> CanConnectToPlex(CancellationToken cancellationToken) 
+        => _tokenService.HaveValidToken(cancellationToken);
 
     public Task<PinLinkResult> GetPinLink(CancellationToken cancellationToken)
         => _pinService.GetPinLink(_settings.ClientId, _settings.ClientName, cancellationToken);
