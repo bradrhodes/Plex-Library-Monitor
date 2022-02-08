@@ -40,7 +40,7 @@ class FileStorageAdapter : IStorageAdapter
         }
         // Super naive retry mechanism for concurrent access to the data file
         // This won't scale but it doesn't need to
-        catch (IOException ex)
+        catch (IOException)
         {
             if (retryCount >= 5)
                 throw;
@@ -142,7 +142,7 @@ class FileStorageAdapter : IStorageAdapter
         }
         // Super naive retry mechanism for concurrent access to the data file
         // This won't scale but it doesn't need to
-        catch (IOException ex)
+        catch (IOException)
         {
             if (retryCount >= 5)
                 throw;

@@ -1,12 +1,12 @@
 ﻿namespace Plibmon.Domain.Plex.DomainModels
 {
-    public abstract class ValidateTokenResponse
+    public abstract record ValidateTokenResponse
     {
-        public class ValidToken : ValidateTokenResponse
+        public record ValidToken : ValidateTokenResponse
         {
-            public PlexUserInfo PlexUserInfo { get; set; }
+            public PlexUserInfo PlexUserInfo { get; set; } = new();
         }
         
-        public class InvalidToken : ValidateTokenResponse{}
+        public record InvalidToken : ValidateTokenResponse;
     }
 }

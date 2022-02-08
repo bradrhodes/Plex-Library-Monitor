@@ -48,7 +48,7 @@ namespace Plibmon.Domain.Plex
             if (!response.IsSuccessStatusCode)
             {
                 var error = JsonConvert.DeserializeObject<Error>(response.Error?.Content);
-                _logger.LogError("Unable to get PIN", error);
+                _logger.LogError("Unable to get PIN: {@error}", error);
                 return new GetPinResponse.Failure { Message = error.message };
             }
             if (response.Content == null)

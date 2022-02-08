@@ -2,9 +2,9 @@
 {
     public class PlibmonSettings
     {
-        public string ClientId { get; set; }
-        public string ClientName { get; set; }
-        public string CacheFolder { get; set; }
-        public string CacheFile { get; set; }
+        public string ClientId { get; set; } = string.Empty;
+        public string ClientName { get; set; } = string.Empty;
+        public string CacheFolder { get; set; } = string.Empty;
+        public string CacheFile { get; set; } = string.Empty;
     }
 }

@@ -1,11 +1,14 @@
-﻿namespace Plibmon.Domain.Plex.PlexModels
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Plibmon.Domain.Plex.PlexModels
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class Service
     {
-        public string identifier { get; set; }
-        public string endpoint { get; set; }
-        public string token { get; set; }
-        public string status { get; set; }
-        public string secret { get; set; }
+        public string identifier { get; set; } = string.Empty;
+        public string endpoint { get; set; } = string.Empty;
+        public string token { get; set; } = string.Empty;
+        public string status { get; set; } = string.Empty;
+        public string secret { get; set; } = string.Empty;
     }
 }

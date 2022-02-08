@@ -1,6 +1,3 @@
-using System.Runtime.InteropServices.ComTypes;
-using MediatR;
-using Plibmon.Domain.Events;
 using Plibmon.Domain.Plex.DomainModels;
 using Plibmon.Shared;
 

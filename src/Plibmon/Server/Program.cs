@@ -1,18 +1,16 @@
-using Microsoft.AspNetCore.ResponseCompression;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using MediatR;
 using Plibmon.Domain;
 using Serilog;
-using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// ReSharper disable once UnusedParameter.Local
 builder.Host.UseSerilog((ctx, lc) =>
 {
     lc.WriteTo.Console();
-    lc.MinimumLevel.Override("Microsoft", LogEventLevel.Debug);
 });
 
 builder.Services.AddControllersWithViews();
@@ -51,6 +49,7 @@ app.MapFallbackToFile("index.html");
 
 app.UseHangfireDashboard();
 
-System.Net.WebRequest.DefaultWebProxy = new System.Net.WebProxy("127.0.0.1", 8888);
+// Note: Uncomment this next line to enable using Fiddler as a proxy to capture traffic from this app
+// System.Net.WebRequest.DefaultWebProxy = new System.Net.WebProxy("127.0.0.1", 8888);
 
 app.Run();

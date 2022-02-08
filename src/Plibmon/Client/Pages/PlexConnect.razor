@@ -1,6 +1,5 @@
 ﻿@page "/PlexConnect"
-@using Plibmon.Shared
-@inject HttpClient Http
+@inject HttpClient _http
 <h3>Connect to Plex</h3>
 <p>It is necessary to allow Plibmon to have access to your plex account.
     The access can be revoked from Plex settings at any time. </p>
@@ -11,7 +10,7 @@
 
     private async Task GetPinLink(CancellationToken cancellationToken)
     {
-        var pinLinkResult = await Http.GetStringAsync("api/Plibmon/GetPinLink").ConfigureAwait(false);
+        var pinLinkResult = await _http.GetStringAsync("api/Plibmon/GetPinLink", cancellationToken).ConfigureAwait(false);
         _link = pinLinkResult;
     }
 

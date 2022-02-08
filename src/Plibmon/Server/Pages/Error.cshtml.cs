@@ -21,6 +21,7 @@ namespace Plibmon.Server.Pages
 
         public void OnGet()
         {
+            _logger.LogDebug("Returning an error");
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
         }
     }

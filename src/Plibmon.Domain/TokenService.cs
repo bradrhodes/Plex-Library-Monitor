@@ -41,7 +41,8 @@ class TokenService : ITokenService
         return tokenValidationResponse switch
         {
             ValidateTokenResponse.ValidToken => true,
-            ValidateTokenResponse.InvalidToken => false
+            ValidateTokenResponse.InvalidToken => false,
+            _ => throw new ArgumentOutOfRangeException()
         };
     }
 

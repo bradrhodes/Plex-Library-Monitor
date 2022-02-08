@@ -4,12 +4,12 @@
     {
         public class Success : GetPinResponse
         {
-            public PinInfo PinInfo { get; init; }
+            public PinInfo PinInfo { get; init; } = new();
         }
 
         public class Failure : GetPinResponse
         {
-            public string Message { get; init; }
+            public string Message { get; init; } = string.Empty;
         }
     }
 }

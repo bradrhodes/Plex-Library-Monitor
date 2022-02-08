@@ -1,5 +1,4 @@
-﻿using Hangfire;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Plibmon.Domain;
 using Plibmon.Shared;
 
@@ -11,12 +10,10 @@ namespace Plibmon.Server.Controllers;
 public class PlibmonController : Controller
 {
     private readonly IPlibmonService _plibmon;
-    private readonly IRecurringJobManager _recurringJobManager;
 
-    public PlibmonController(IPlibmonService plibmon, IRecurringJobManager recurringJobManager)
+    public PlibmonController(IPlibmonService plibmon)
     {
         _plibmon = plibmon ?? throw new ArgumentNullException(nameof(plibmon));
-        _recurringJobManager = recurringJobManager ?? throw new ArgumentNullException(nameof(recurringJobManager));
     }
     
     // GET: api/Plibmon
