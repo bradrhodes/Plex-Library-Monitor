@@ -1,4 +1,4 @@
-﻿namespace Plibmon.Domain;
+﻿namespace Plibmon.Domain.Persistance;
 
 public abstract record StorageReadResult<T>
 {

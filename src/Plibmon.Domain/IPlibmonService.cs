@@ -6,6 +6,5 @@ public interface IPlibmonService
 {
     Task<bool> CanConnectToPlex(CancellationToken cancellationToken);
     Task<PinLinkResult> GetPinLink(CancellationToken cancellationToken);
-    
-    Task ValidatePin()
+    void PollForPinAuthorization(string pinId, string pinCode, string clientId, CancellationToken cancellationToken);
 }

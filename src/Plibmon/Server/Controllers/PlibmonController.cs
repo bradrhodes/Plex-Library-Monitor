@@ -33,7 +33,6 @@ public class PlibmonController : Controller
         var pinResult = await _plibmon.GetPinLink(cancellationToken);
         
         // Start polling
-        _recurringJobManager.AddOrUpdate("PinValidationPoller", () => _plibmon.);
 
         return pinResult switch
         {

@@ -1,21 +1,24 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Plibmon.Domain;
+namespace Plibmon.Domain.Persistance;
 
 class FileStorageAdapter : IStorageAdapter
 {
     private readonly FileStorageSettings _settings;
+    private readonly ILogger<FileStorageAdapter> _logger;
 
-    public FileStorageAdapter(FileStorageSettings settings)
+    public FileStorageAdapter(FileStorageSettings settings, ILogger<FileStorageAdapter> logger)
     {
         _settings = settings;
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public Task<StorageWriteResult> StoreObject(object data, CancellationToken cancellationToken)
+    public Task StoreObject(object data, CancellationToken cancellationToken)
         => StoreObject(data, cancellationToken, string.Empty);
 
-    public async Task<StorageWriteResult> StoreObject(object data,
+    public async Task StoreObject(object data,
         CancellationToken cancellationToken, string objectName)
     {
         try
@@ -38,12 +41,11 @@ class FileStorageAdapter : IStorageAdapter
             jObject[objectName] = JObject.FromObject(data);
 
             await File.WriteAllTextAsync(_settings.FullFileName, jObject.ToString(), cancellationToken).ConfigureAwait(false);
-
-            return new StorageWriteResult.Success();
+            _logger.LogInformation($"{objectName} stored successfully");
         }
         catch (Exception ex)
         {
-            return new StorageWriteResult.Failure(ex.Message);
+            _logger.LogError($"Unable to store {objectName}. {ex.Message}");
         }
     }
 

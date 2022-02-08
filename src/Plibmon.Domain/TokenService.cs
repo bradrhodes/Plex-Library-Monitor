@@ -1,3 +1,4 @@
+using Plibmon.Domain.Persistance;
 using Plibmon.Domain.Plex;
 using Plibmon.Domain.Plex.DomainModels;
 
@@ -20,7 +21,7 @@ class TokenService : ITokenService
         return infoFromCache switch
         {
             StorageReadResult<PlexToken>.Success result => result.Data,
-            StorageReadResult<PlexToken>.Failure => new PlexToken(),
+            StorageReadResult<PlexToken>.Failure => new PlexToken(string.Empty),
             _ => throw new ArgumentOutOfRangeException(nameof(infoFromCache))
         };
     }
