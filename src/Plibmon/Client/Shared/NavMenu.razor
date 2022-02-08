@@ -57,7 +57,7 @@
 
     private async Task IsConnectableToPlex()
     {
-        var connectResult = await Http.GetStringAsync("/api/Plibmon").ConfigureAwait(false);
+        var connectResult = await Http.GetStringAsync("/api/Plibmon/CanConnectToPlex").ConfigureAwait(false);
         // var connectResult = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");       
         bool.TryParse(connectResult, out var result);
 

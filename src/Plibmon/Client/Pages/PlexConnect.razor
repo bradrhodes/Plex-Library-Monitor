@@ -11,7 +11,7 @@
 
     private async Task GetPinLink(CancellationToken cancellationToken)
     {
-        var pinLinkResult = await Http.GetStringAsync("api/Plibmon").ConfigureAwait(false);
+        var pinLinkResult = await Http.GetStringAsync("api/Plibmon/GetPinLink").ConfigureAwait(false);
         _link = pinLinkResult;
     }
 

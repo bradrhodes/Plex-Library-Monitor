@@ -25,8 +25,13 @@ public class PlibmonController : Controller
     // {
     //     return _plibmon.CanConnectToPlex(cancellationToken);
     // }
+    [HttpGet("CanConnectToPlex")]
+    public Task<bool> CanConnectToPlex(CancellationToken cancellationToken)
+    {
+        return _plibmon.CanConnectToPlex(cancellationToken);
+    }
 
-    [HttpGet]
+    [HttpGet("GetPinLink")]
     // [Route("api/getpinlink")]
     public async Task<string> GetPinLink(CancellationToken cancellationToken)
     {

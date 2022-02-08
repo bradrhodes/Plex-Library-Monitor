@@ -103,10 +103,4 @@ class FileStorageAdapter : IStorageAdapter
 
         return new StorageReadResult<T>.Success(result);
     }
-
-    private void UpsertDataFolder()
-    {
-        if (!Directory.Exists(_settings.FolderName))
-            Directory.CreateDirectory(_settings.FolderName);
-    }
 }
