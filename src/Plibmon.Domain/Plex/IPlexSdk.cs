@@ -6,6 +6,6 @@ namespace Plibmon.Domain.Plex
     {
         Task<ValidateTokenResponse> ValidateToken(string token, string clientId, string clientName);
         Task<GetPinResponse> GetPin(string clientId, string clientName);
-        Task<PollPinResponse> PollForPin(string pinId, string pinCode, string clientId);
+        Task<PinAuthorizationResponse> CheckForPinAuthorization(string pinId, string pinCode, string clientId, CancellationToken cancellationToken);
     }
 }

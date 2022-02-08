@@ -22,4 +22,9 @@ class PlibmonService : IPlibmonService
 
     public Task<PinLinkResult> GetPinLink(CancellationToken cancellationToken)
         => _pinService.GetPinLink(_settings.ClientId, _settings.ClientName, cancellationToken);
+
+    public async Task PollForPinAuthorization(CancellationToken cancellationToken)
+    {
+        var pinResult = _pinService.ValidatePin()
+    }
 }

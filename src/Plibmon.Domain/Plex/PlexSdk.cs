@@ -59,33 +59,31 @@ namespace Plibmon.Domain.Plex
 
             return new GetPinResponse.Success()
             {
-                PinCode = response.Content.code,
-                PinId = response.Content.id.ToString()
+                PinInfo = new PinInfo(
+                    PinId: response.Content.id.ToString(),
+                    PinCode: response.Content.code)
             };
         }
 
-        public async Task<PollPinResponse> PollForPin(string pinId, string pinCode, string clientId)
+        public async Task<PinAuthorizationResponse> CheckForPinAuthorization(string pinId, string pinCode, string clientId, CancellationToken cancellationToken)
         {
-            var response = await _plexApi.PollForPin(pinId, pinCode, clientId).ConfigureAwait(false);
+            var response = await _plexApi.CheckForPinAuthorization(pinId, pinCode, clientId).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
-                return new PollPinResponse.PinInvalidOrExpired();
+                return new PinAuthorizationResponse.PinAuthorizationInvalidOrExpired();
 
             if (response.Content == null)
             {
                 _logger.LogError("Unable to deserialize PIN response");
-                return new PollPinResponse.PinInvalidOrExpired();
+                return new PinAuthorizationResponse.PinAuthorizationInvalidOrExpired();
             }
 
             if (string.IsNullOrEmpty(response.Content.authToken))
             {
-                return new PollPinResponse.PinNotYetAuthorized();
+                return new PinAuthorizationResponse.PinNotYetAuthorized();
             }
 
-            return new PollPinResponse.Success
-            {
-                AuthToken = response.Content.authToken
-            };
+            return new PinAuthorizationResponse.Success(AuthToken: new PlexToken(response.Content.authToken));
         }
     }
 }

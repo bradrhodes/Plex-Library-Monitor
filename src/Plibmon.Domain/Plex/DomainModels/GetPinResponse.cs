@@ -4,13 +4,12 @@
     {
         public class Success : GetPinResponse
         {
-            public string PinId { get; set; }
-            public string PinCode { get; set; }
+            public PinInfo PinInfo { get; init; }
         }
 
         public class Failure : GetPinResponse
         {
-            public string Message { get; set; }
+            public string Message { get; init; }
         }
     }
 }

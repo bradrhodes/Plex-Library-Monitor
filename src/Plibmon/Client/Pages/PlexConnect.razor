@@ -11,14 +11,7 @@
 
     private async Task GetPinLink(CancellationToken cancellationToken)
     {
-        // var pinLinkResult = await Http.GetStringAsync("api/getpinlink").ConfigureAwait(false);
         var pinLinkResult = await Http.GetStringAsync("api/Plibmon").ConfigureAwait(false);
-        // _link = pinLinkResult switch 
-        // {
-        //     PinLinkResult.PinLinkSuccess s => s.PinLink,
-        //     PinLinkResult.PinLinkFailure f => f.ErrorMessage,
-        //     _ => throw new ArgumentOutOfRangeException()
-        // };
         _link = pinLinkResult;
     }
 

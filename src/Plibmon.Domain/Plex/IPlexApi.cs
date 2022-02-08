@@ -11,9 +11,10 @@ namespace Plibmon.Domain.Plex
             [AliasAs("X-Plex-Client-Identifier")] string clientId,
             [AliasAs("strong")] bool strong = true);
 
+        // Todo: See if this can be passed a CancellationToken
         // https://plex.tv/api/v2/pins/{{PinId}}?code={{PinCode}}&X-Plex-Client-Identifier={{ClientId}}
         [Get("/pins/{pinId}")]
-        Task<ApiResponse<PinResponse>> PollForPin([AliasAs("pinId")] string pinId,
+        Task<ApiResponse<PinResponse>> CheckForPinAuthorization([AliasAs("pinId")] string pinId,
             [AliasAs("code")] string pinCode, 
             [AliasAs("X-Plex-Client-Identifier")] string clientId);
 

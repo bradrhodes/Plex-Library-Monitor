@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using Hangfire;
 using Hangfire.MemoryStorage;
+using MediatR;
 using Plibmon.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,8 @@ builder.Services.AddPlibmonSampleConfig();
 
 builder.Services.AddHangfire(x => x.UseMemoryStorage());
 builder.Services.AddHangfireServer();
+
+builder.Services.AddMediatR(typeof(IPlibmonService));
 
 var app = builder.Build();
 
