@@ -16,9 +16,9 @@ builder.Host.UseSerilog((ctx, lc) =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-builder.Services.AddPlibmonDomain();
+builder.Services.AddPlibmonDomain(builder);
 // Todo: this needs to be removed
-builder.Services.AddPlibmonSampleConfig();
+// builder.Services.AddPlibmonSampleConfig();
 
 builder.Services.AddHangfire(x => x.UseMemoryStorage());
 builder.Services.AddHangfireServer();
