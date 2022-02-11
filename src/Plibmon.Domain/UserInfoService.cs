@@ -10,12 +10,15 @@ class UserInfoService : IUserInfoService
     private readonly IStorageAdapter _storage;
     private readonly IPlexSdk _plexSdk;
     private readonly PlibmonSettings _settings;
+    private readonly IClientIdService _clientIdService;
 
-    public UserInfoService(IStorageAdapter storage, IPlexSdk plexSdk, PlibmonSettings settings)
+    public UserInfoService(IStorageAdapter storage, IPlexSdk plexSdk, PlibmonSettings settings,
+        IClientIdService clientIdService)
     {
         _storage = storage ?? throw new ArgumentNullException(nameof(storage));
         _plexSdk = plexSdk;
         _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        _clientIdService = clientIdService ?? throw new ArgumentNullException(nameof(clientIdService));
     }
     public async Task<PlexUserInfo> GetUserInfo(CancellationToken cancellationToken)
     {
@@ -42,7 +45,9 @@ class UserInfoService : IUserInfoService
             
         // Call the validate token endpoint to get the user info
         var getUserInfoFromPlex = await _plexSdk.ValidateToken(
-            token.Data.Token, _settings.ClientId, _settings.ClientName).ConfigureAwait(false);
+            token.Data.Token, 
+            (await _clientIdService.GetClientId(cancellationToken).ConfigureAwait(false)).ClientId, 
+            _settings.ClientName).ConfigureAwait(false);
 
         if (getUserInfoFromPlex is ValidateTokenResponse.InvalidToken)
             return new PlexUserInfo();

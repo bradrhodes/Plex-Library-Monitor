@@ -36,6 +36,7 @@ public static class DomainDiRegistration
       services.AddSingleton<IPlibmonService, PlibmonService>();
       services.AddSingleton<IPlexSdk, PlexSdk>();
       services.AddSingleton<IPinService, PinService>();
+      services.AddSingleton<IClientIdService, ClientIdService>();
       services.AddRefitClient<IPlexApi>().ConfigureHttpClient((provider, httpClient) =>
       {
          var settings = provider.GetRequiredService<PlibmonSettings>();

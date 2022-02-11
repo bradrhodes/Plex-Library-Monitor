@@ -17,8 +17,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddPlibmonDomain(builder);
-// Todo: this needs to be removed
-// builder.Services.AddPlibmonSampleConfig();
 
 builder.Services.AddHangfire(x => x.UseMemoryStorage());
 builder.Services.AddHangfireServer();
@@ -48,6 +46,10 @@ app.MapControllers();
 app.MapFallbackToFile("index.html");
 
 app.UseHangfireDashboard();
+
+// Make sure a ClientId is generated for this instance of the app
+var clientIdService = app.Services.GetRequiredService<IClientIdService>();
+await clientIdService.GetClientId(CancellationToken.None).ConfigureAwait(false);
 
 // Note: Uncomment this next line to enable using Fiddler as a proxy to capture traffic from this app
 // System.Net.WebRequest.DefaultWebProxy = new System.Net.WebProxy("127.0.0.1", 8888);

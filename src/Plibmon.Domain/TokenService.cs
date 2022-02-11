@@ -10,12 +10,15 @@ class TokenService : ITokenService
     private readonly IStorageAdapter _storage;
     private readonly IPlexSdk _plex;
     private readonly PlibmonSettings _settings;
+    private readonly IClientIdService _clientIdService;
 
-    public TokenService(IStorageAdapter storage, IPlexSdk plex, PlibmonSettings settings)
+    public TokenService(IStorageAdapter storage, IPlexSdk plex, PlibmonSettings settings, 
+        IClientIdService clientIdService)
     {
         _storage = storage ?? throw new ArgumentNullException(nameof(storage));
         _plex = plex ?? throw new ArgumentNullException(nameof(plex));
         _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        _clientIdService = clientIdService ?? throw new ArgumentNullException(nameof(clientIdService));
     }
     public async Task<PlexToken> GetToken(CancellationToken cancellationToken)
     {
@@ -29,6 +32,7 @@ class TokenService : ITokenService
         };
     }
 
+
     public async Task<bool> HaveValidToken(CancellationToken cancellationToken)
     {
         var token = await GetToken(cancellationToken).ConfigureAwait(false);
@@ -36,8 +40,10 @@ class TokenService : ITokenService
         if (string.IsNullOrEmpty(token.Token))
             return false;
 
+        var clientId = await _clientIdService.GetClientId(cancellationToken).ConfigureAwait(false);
+
         var tokenValidationResponse = await _plex.ValidateToken(token.Token,
-            _settings.ClientId, _settings.ClientName).ConfigureAwait(false);
+            clientId.ClientId, _settings.ClientName).ConfigureAwait(false);
 
         return tokenValidationResponse switch
         {
