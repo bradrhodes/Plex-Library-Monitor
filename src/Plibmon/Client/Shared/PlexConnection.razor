@@ -1,0 +1,53 @@
+﻿@using System.Threading;
+@inject HttpClient _http
+@implements IDisposable
+
+<div class="container-fluid">
+    <div class="nav-status">
+        <img class="plex-icon" src="pngegg.png" alt="Plex icon"/>
+        <a class="navbar-brand" href="">@_isConnectableToPlex</a>
+    </div>
+</div>
+
+@code {
+    string _isConnectableToPlex = "Checking Plex connection";
+    private Timer _timer;
+    CancellationTokenSource _token = new();
+
+    private async Task IsConnectableToPlex(CancellationToken cancellationToken)
+    {
+        var connectResult = await _http.GetStringAsync("/api/Plibmon/CanConnectToPlex", cancellationToken).ConfigureAwait(false);
+        // var connectResult = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");       
+        bool.TryParse(connectResult, out var result);
+
+        // isConnectableToPlex = result == true ? "Connected to Plex" : "Unable to connect to Plex";
+        _isConnectableToPlex = result switch {
+            true => "Connected to Plex",
+            false => "Unable to connect to Plex"
+        };
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Poll for connectability every second
+        _timer = new Timer(Poller, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+        
+        await base.OnInitializedAsync();
+    }
+
+    private void Poller(object? state)
+    {
+        // Discard the result
+        _ = IsConnectableToPlex(_token.Token);
+    }
+    
+
+    public void Dispose()
+    {
+        _timer.Dispose();
+        _token.Dispose();
+        _http?.Dispose();
+    }
+
+}
