@@ -6,12 +6,12 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Plibmon/Server/Plibmon.Server.csproj", "Plibmon/Server/"]
-COPY ["Plibmon/Client/Plibmon.Client.csproj", "Plibmon/Client/"]
-COPY ["Plibmon/Shared/Plibmon.Shared.csproj", "Plibmon/Shared/"]
-COPY ["Plibmon/Domain/Plibmon.Domain.csproj", "Plibmon/Domain/"]
+COPY ["src/Plibmon/Server/Plibmon.Server.csproj", "Plibmon/Server/"]
+COPY ["src/Plibmon/Client/Plibmon.Client.csproj", "Plibmon/Client/"]
+COPY ["src/Plibmon/Shared/Plibmon.Shared.csproj", "Plibmon/Shared/"]
+COPY ["src/Plibmon/Domain/Plibmon.Domain.csproj", "Plibmon/Domain/"]
 RUN dotnet restore "Plibmon/Server/Plibmon.Server.csproj"
-COPY . .
+COPY src/. .
 WORKDIR "/src/Plibmon/Server"
 RUN dotnet build "Plibmon.Server.csproj" -c Release -o /app/build
 
