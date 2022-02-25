@@ -22,8 +22,8 @@
 
         // isConnectableToPlex = result == true ? "Connected to Plex" : "Unable to connect to Plex";
         _isConnectableToPlex = result switch {
-            true => "Connected to Plex",
-            false => "Unable to connect to Plex"
+            true => "Plex Connected",
+            false => "Plex Not Connected"
         };
         StateHasChanged();
     }
