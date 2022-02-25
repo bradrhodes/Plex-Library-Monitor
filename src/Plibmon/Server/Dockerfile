@@ -9,7 +9,7 @@ WORKDIR /src
 COPY ["Plibmon/Server/Plibmon.Server.csproj", "Plibmon/Server/"]
 COPY ["Plibmon/Client/Plibmon.Client.csproj", "Plibmon/Client/"]
 COPY ["Plibmon/Shared/Plibmon.Shared.csproj", "Plibmon/Shared/"]
-COPY ["Plibmon.Domain/Plibmon.Domain.csproj", "Plibmon.Domain/"]
+COPY ["Plibmon/Domain/Plibmon.Domain.csproj", "Plibmon/Domain/"]
 RUN dotnet restore "Plibmon/Server/Plibmon.Server.csproj"
 COPY . .
 WORKDIR "/src/Plibmon/Server"
