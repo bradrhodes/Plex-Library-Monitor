@@ -1,4 +1,7 @@
-﻿
+﻿@inject AppState AppState;
+@using System.Diagnostics
+@implements IDisposable;
+
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Plibmon</a>
@@ -7,7 +10,6 @@
         </button>
     </div>
 </div>
-
 <div class="top-row ps-3 navbar navbar-dark">
     <PlexConnection></PlexConnection>
 </div>
@@ -19,11 +21,15 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="plexConnect">
-                <span class="oi oi-plus" aria-hidden="true"></span> Connect to Plex
-            </NavLink>
-        </div>
+        
+        @if (!AppState.CanConnectToPlex)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="plexConnect">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Connect to Plex
+                </NavLink>
+            </div>
+        }
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="fetchdata">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
@@ -41,4 +47,24 @@
     {
         _collapseNavMenu = !_collapseNavMenu;
     }
+
+    private async Task AppState_StateChanged(ComponentBase Source, string Property)
+    {
+        if (Source != this)
+            await InvokeAsync(StateHasChanged);
+    }
+
+    protected override void OnInitialized()
+    {
+        AppState.StateChanged += async (source, property)
+            => await AppState_StateChanged(source, property);
+    }
+
+    public void Dispose()
+    {
+        // AppState.StateChanged += async (Source, Property) => await AppState_Statechanged(Source, Property);
+        AppState.StateChanged -= async (source, property) => 
+            await AppState_StateChanged(source, property);
+    }
+
 }

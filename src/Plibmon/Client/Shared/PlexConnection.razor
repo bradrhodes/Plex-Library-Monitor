@@ -1,5 +1,7 @@
 ﻿@using System.Threading;
+@using System.Diagnostics
 @inject HttpClient _http
+@inject AppState AppState;
 @implements IDisposable
 
 <div class="container-fluid">
@@ -25,13 +27,22 @@
             true => "Plex Connected",
             false => "Plex Not Connected"
         };
+        AppState.UpdateCanConnectToPlex(this, result);
         StateHasChanged();
     }
 
+    private async Task AppState_StateChanged(ComponentBase source, string property)
+    {
+        if (source != this)
+            await InvokeAsync(StateHasChanged);
+    }
+    
     protected override async Task OnInitializedAsync()
     {
         // Poll for connectability every second
         _timer = new Timer(Poller, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+        AppState.StateChanged += async (source, property)
+            => await AppState_StateChanged(source, property);
         
         await base.OnInitializedAsync();
     }

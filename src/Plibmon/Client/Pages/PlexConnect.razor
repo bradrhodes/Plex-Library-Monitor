@@ -1,17 +1,33 @@
 ﻿@page "/PlexConnect"
+@inject IJSRuntime jsRuntime
 @inject HttpClient _http
 <h3>Connect to Plex</h3>
 <p>It is necessary to allow Plibmon to have access to your plex account.
     The access can be revoked from Plex settings at any time. </p>
 <p>Follow this link and sign into your plex account to grant access.</p>
-<p>@_link</p>
+@if (!_linkGenerated)
+{
+    <p>Generating link to allow access to Plex.</p>
+}
+else{
+    <button @onclick="NavigateToPlex">Click here to grant Plex access</button>
+}
+
 @code {
-    string _link = "Generating link to allow access to Plex.";
+    string _link = "Not generated";
+    bool _linkGenerated = false;
 
     private async Task GetPinLink(CancellationToken cancellationToken)
     {
         var pinLinkResult = await _http.GetStringAsync("api/Plibmon/GetPinLink", cancellationToken).ConfigureAwait(false);
+        _linkGenerated = true;
         _link = pinLinkResult;
+        StateHasChanged();
+    }
+
+    public async Task NavigateToPlex()
+    {
+        await jsRuntime.InvokeAsync<object>("open", _link, "_blank");
     }
 
     protected override async Task OnInitializedAsync()
